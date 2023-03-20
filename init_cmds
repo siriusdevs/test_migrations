@@ -4,6 +4,6 @@ docker run -d --name test -p 5555:5432 \
 -e POSTGRES_DB=test_db \
 postgres
 
-psql -h 127.0.0.1 -p 5555 -U app -d test
+psql -h 127.0.0.1 -p 5555 -U app -d test_db
 
-psql -h 127.0.0.1 -p 5555 -U app -d test -f init_db.ddl
+psql -h 127.0.0.1 -p 5555 -U app -d test_db -f init_db.ddl

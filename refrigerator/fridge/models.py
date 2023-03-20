@@ -24,7 +24,7 @@ class Shelf(UUIDMixin):
     slot = models.ForeignKey(Slot, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return str(id)
+        return str(self.id)
 
     class Meta:
         db_table = 'shelf'

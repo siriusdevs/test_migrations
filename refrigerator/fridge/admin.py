@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Slot, Shelf, Products
+from .models import *
 
-for cls in Slot, Shelf, Products:
+for cls in Slot, Shelf, Product, Category, ProductCategory:
     admin.site.register(cls)

@@ -1,7 +1,14 @@
 from django.db import models
 
-class Slot(models.Model):
+
+class UUIDMixin(models.Model):
     id = models.UUIDField(primary_key=True)
+
+    class Meta:
+        abstract = True
+
+
+class Slot(UUIDMixin):
     name = models.TextField()
     temperature = models.IntegerField()
 
@@ -11,8 +18,8 @@ class Slot(models.Model):
     class Meta:
         db_table = 'slot'
 
-class Shelf(models.Model):
-    id = models.UUIDField(primary_key=True)
+
+class Shelf(UUIDMixin):
     slot = models.ForeignKey(Slot, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
@@ -21,15 +28,33 @@ class Shelf(models.Model):
     class Meta:
         db_table = 'shelf'
 
-class Products(models.Model):
-    id = models.UUIDField(primary_key=True)
+class Product(UUIDMixin):
     name = models.TextField()
     expires = models.DateField(blank=True, null=True)
     price = models.FloatField(blank=True, null=True)
     shelf = models.ForeignKey(Shelf, on_delete=models.CASCADE, blank=True, null=True)
+    
 
     def __str__(self):
         return f'{self.name}'
 
     class Meta:
-        db_table = 'products'
+        db_table = 'product'
+
+
+class Category(UUIDMixin):
+    name = models.TextField()
+
+    def __str__(self):
+        return f'{self.name}'
+    
+    class Meta:
+        db_table = 'category'
+
+
+class ProductCategory(UUIDMixin):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=False)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=False)
+
+    class Meta:
+        db_table = 'product_category'
